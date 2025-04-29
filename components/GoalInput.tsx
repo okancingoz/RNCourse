@@ -12,6 +12,12 @@ export default function ({ onAddGoal }: GoalInputProps) {
     setEnteredGoalText(enteredText);
   }
 
+  const handleAddGoal = () => {
+    if (!enteredGoalText.trim()) return;
+    onAddGoal(enteredGoalText.trim());
+    setEnteredGoalText("");
+  };
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -20,6 +26,7 @@ export default function ({ onAddGoal }: GoalInputProps) {
         onChangeText={goalInputHandler}
         value={enteredGoalText}
       />
+      <Button title="ADD GOAL" onPress={handleAddGoal} />
     </View>
   );
 }

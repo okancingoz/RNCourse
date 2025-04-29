@@ -26,8 +26,8 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
+      <GoalInput onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
-        <GoalInput onAddGoal={addGoalHandler} />
         <FlatList
           data={courseGoals}
           keyExtractor={(item) => item.id}
