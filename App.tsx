@@ -1,15 +1,32 @@
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import { useState } from "react";
+import { Goal } from "./types/goal";
+import GoalItem from "./components/GoalItem";
+import React from "react";
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [enteredGoalText, setEnteredGoalText] = useState<string>("");
+  const [courseGoals, setCourseGoals] = useState<Goal[]>([]);
 
-  function goalInputHandler(enteredText) {
+  function goalInputHandler(enteredText: string) {
     setEnteredGoalText(enteredText);
   }
 
   function addGoalHandler() {
-    console.log(enteredGoalText);
+    const newGoal: Goal = {
+      id: Math.random().toString(),
+      text: enteredGoalText,
+    };
+    setCourseGoals((prevGoals) => [...prevGoals, newGoal]);
+    setEnteredGoalText("");
   }
 
   return (
@@ -19,11 +36,16 @@ export default function App() {
           style={styles.textInput}
           placeholder="Your course goal!"
           onChangeText={goalInputHandler}
+          value={enteredGoalText}
         />
         <Button title="ADD GOAL" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
+        <FlatList
+          data={courseGoals}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <GoalItem goal={item} />}
+        />
       </View>
     </View>
   );
@@ -34,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 16,
+    backgroundColor: "#fefae0",
   },
   inputContainer: {
     flex: 1,
@@ -42,11 +65,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 24,
     borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
+    borderBottomColor: "#eeeeee",
   },
   textInput: {
     borderWidth: 1,
     borderColor: "#cccccc",
+    borderRadius: 8,
     width: "70%",
     marginRight: 8,
     padding: 8,
