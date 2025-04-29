@@ -11,36 +11,23 @@ import { useState } from "react";
 import { Goal } from "./types/goal";
 import GoalItem from "./components/GoalItem";
 import React from "react";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState<string>("");
   const [courseGoals, setCourseGoals] = useState<Goal[]>([]);
 
-  function goalInputHandler(enteredText: string) {
-    setEnteredGoalText(enteredText);
-  }
-
-  function addGoalHandler() {
+  const addGoalHandler = (enteredText: string) => {
     const newGoal: Goal = {
       id: Math.random().toString(),
-      text: enteredGoalText,
+      text: enteredText,
     };
     setCourseGoals((prevGoals) => [...prevGoals, newGoal]);
-    setEnteredGoalText("");
-  }
+  };
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your course goal!"
-          onChangeText={goalInputHandler}
-          value={enteredGoalText}
-        />
-        <Button title="ADD GOAL" onPress={addGoalHandler} />
-      </View>
       <View style={styles.goalsContainer}>
+        <GoalInput onAddGoal={addGoalHandler} />
         <FlatList
           data={courseGoals}
           keyExtractor={(item) => item.id}
@@ -58,23 +45,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: "#fefae0",
   },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eeeeee",
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    borderRadius: 8,
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
-  },
+
   goalsContainer: {
     flex: 5,
   },
