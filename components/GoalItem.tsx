@@ -9,23 +9,31 @@ type Props = {
 
 export default function GoalItem({ goal, onDelete }: Props) {
   return (
-    <Pressable onLongPress={() => onDelete(goal.id)}>
-      <View style={styles.goalItem}>
+    <View style={styles.goalItem}>
+      <Pressable
+        android_ripple={{ color: "#8098a4" }}
+        onLongPress={() => onDelete(goal.id)}
+        style={({ pressed }) => pressed && styles.pressedItem}
+      >
         <Text style={styles.goalText}>{goal.text}</Text>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   goalItem: {
     marginBottom: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 16,
     backgroundColor: "#003049",
     borderRadius: 16,
   },
+  pressedItem: {
+    opacity: 0.5,
+  },
   goalText: {
     color: "#fdf0d5",
+    paddingHorizontal: 8,
+    paddingVertical: 16,
+    borderRadius: 16,
   },
 });
