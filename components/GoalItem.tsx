@@ -23,8 +23,8 @@ export default function GoalItem({ goal, onDelete }: Props) {
 
 const styles = StyleSheet.create({
   goalItem: {
-    marginBottom: 4,
-    backgroundColor: "#003049",
+    margin: 8,
+    backgroundColor: "#668392",
     borderRadius: 16,
   },
   pressedItem: {
