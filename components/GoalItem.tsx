@@ -1,16 +1,19 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { Goal } from "../types/goal";
 import React from "react";
 
 type Props = {
   goal: Goal;
+  onDelete: (id: string) => void;
 };
 
-export default function GoalItem({ goal }: Props) {
+export default function GoalItem({ goal, onDelete }: Props) {
   return (
-    <View style={styles.goalItem}>
-      <Text style={styles.goalText}>{goal.text}</Text>
-    </View>
+    <Pressable onLongPress={() => onDelete(goal.id)}>
+      <View style={styles.goalItem}>
+        <Text style={styles.goalText}>{goal.text}</Text>
+      </View>
+    </Pressable>
   );
 }
 
